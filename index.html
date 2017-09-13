@@ -88,8 +88,8 @@
         foundStations.forEach(function(e) {
           L.marker([latitude(e), longitude(e)], {
             icon: trainIcon
-          }).addTo(map).bindPopup(stationName(e) +
-            "<br><a href='https://www.trainline.fr/search/" + stationName(e) + "/' target='_blank' style='color: #84B22D;'>Partir avec trainline</a>");
+          }).addTo(map).bindPopup("<p style='font-size:150%'>" + stationName(e) +
+            "<br><a href='https://www.trainline.fr/search/" + stationName(e) + "/' target='_blank' style='color: #84B22D;'>Partir avec trainline</a></p>");
         });
 
         document.getElementById("stations").innerHTML = "Voici les gares trouvées :";
