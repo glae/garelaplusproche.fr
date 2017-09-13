@@ -9,8 +9,8 @@ function findNearestStations(stations, lat, long, searchRadius = 0.10) {
 
   const nearestStations = stations.filter(function(s) {
 
-    const lat = Object.values(s)[0][0];
-    const long = Object.values(s)[0][1];
+    const lat = latitude(s);
+    const long = longitude(s);
 
     if (lat >= minLat && lat <= maxLat && long >= minLong && long <= maxLong) {
       return true;
@@ -19,13 +19,26 @@ function findNearestStations(stations, lat, long, searchRadius = 0.10) {
     }
   });
 
-  if (nearestStations.length < 5) {
+  if (nearestStations.length < 10) {
     return findNearestStations(stations, lat, long, searchRadius + 0.05);
   } else {
     return nearestStations;
   }
 
 }
+
+function stationName(e){
+  return Object.keys(e)[0];
+}
+
+function latitude(e){
+  return Object.values(e)[0][0];
+}
+
+function longitude(e){
+  return Object.values(e)[0][1];
+}
+
 
 //for unit tests
 if (typeof module !== 'undefined'){

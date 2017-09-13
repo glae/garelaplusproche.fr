@@ -1,58 +1,132 @@
 <!doctype html>
 <html lang="fr">
+
 <head>
   <meta charset="utf-8">
   <title>Gare la plus proche</title>
   <script src="main.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ==" crossorigin="" />
+  <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" />
+  <style>
+    * {
+      font-family: sans-serif;
+    }
 
+    button {
+      font-size: 160%;
+      background-color: #9BED00;
+      border: 2px solid #84B22D;
+    }
+
+    a {
+      color: #84B22D;
+    }
+
+    .loader {
+      text-align: center;
+      border: 10px solid #f3f3f3;
+      /* Light grey */
+      border-top: 10px solid #9BED00;
+      /* Blue */
+      border-radius: 50%;
+      margin-left: auto;
+      margin-right: auto;
+      width: 40px;
+      height: 40px;
+      animation: spin 2s linear infinite;
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    #mapid {
+      height: 400px;
+    }
+  </style>
+  <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js" integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log==" crossorigin=""></script>
+  <script>
+    var map;
+
+    function search() {
+      document.getElementById("stations").innerHTML = "<i>Demande d'autorisation / chargement en cours...</i><br><br>" +
+        "<div class='loader'></div>";
+
+      var geoSuccess = function(p) {
+
+        document.getElementById('mapcontainer').innerHTML = "<div id='mapid'></div>";
+
+        const userLat = p.coords.latitude;
+        const userLong = p.coords.longitude;
+
+        map = L.map('mapid').setView([userLat, userLong], 11);
+
+        L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
+
+        const foundStations = findNearestStations(stations, userLat, userLong);
+
+        var trainIcon = new L.Icon({
+          iconUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Emojione_1F687.svg/200px-Emojione_1F687.svg.png',
+          iconSize: [32, 32]
+        });
+
+        var homeIcon = new L.Icon({
+          iconUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Map_pin_icon.svg/200px-Map_pin_icon.svg.png',
+          iconSize: [31, 43]
+        });
+
+        L.marker([userLat, userLong], {
+          icon: homeIcon
+        }).addTo(map).bindPopup('Votre position');
+
+        foundStations.forEach(function(e) {
+          L.marker([latitude(e), longitude(e)], {
+            icon: trainIcon
+          }).addTo(map).bindPopup(stationName(e) +
+            "<br><a href='https://www.trainline.fr/search/" + stationName(e) + "/' target='_blank' style='color: #84B22D;'>Partir avec trainline</a>");
+        });
+
+        document.getElementById("stations").innerHTML = "<small>Gares proches : " + foundStations.map(function(e) {
+          return stationName(e);
+        }) + "</small>";
+
+      };
+
+
+      navigator.geolocation.getCurrentPosition(geoSuccess);
+
+    };
+  </script>
 </head>
-<style>
-* {
-  font-family: sans-serif;
-}
-button {
-  font-size: 160%;
-  background-color:#9BED00;
-  border: 2px solid #84B22D;
-}
-a {
-  color: #84B22D;
-}
-</style>
-
-<script>
-function search() {
-  document.getElementById("stations").innerHTML = "<i>Attente d'autorisation et chargement...</i>";
-
-  var geoSuccess = function(p) {
-     const res = findNearestStations(stations, p.coords.latitude, p.coords.longitude);
-      document.getElementById("stations").innerHTML = "Gares proches : " + res.map(function(e){return Object.keys(e)[0];});;
-  };
-  navigator.geolocation.getCurrentPosition(geoSuccess);
-};
-
-</script>
 
 <body>
 
-<h1>Trouvez la gare la plus proche.</h1>
+  <h1>Trouvez la gare la plus proche.</h1>
 
-<div style="text-align:center">
-<button onclick="search()">Rechercher !</button>
-</div>
+  <div style="text-align:center">
+    <button onclick="search()">Rechercher !</button>
+  </div>
 
-<br>
-<br>
-<div id="stations">
-</div>
+  <br>
+  <div id="stations">
+  </div>
 
+  <br>
+  <div id="mapcontainer">
+    <div id="mapid"></div>
+  </div>
+  <br>
 
-<br>
-<br>
-<hr/>
-Ce site n'est pas affilié à la SNCF.
-<br>
-<a href="" target="_blank">Sources sur github</a> - <a href="motivations.html">Pourquoi ce site ?</a>
+  <br>
+  <br>
+  <hr/> Ce site n'est ni affilié à la SNCF ni à trainline. -
+  <a href="https://github.com/glae/lagarelaplusproche.fr">Sources sur github</a> - <a href="https://github.com/glae/lagarelaplusproche.fr#motivations-in-french">Pourquoi ce site ?</a>
 
 </body>
+
 </html>

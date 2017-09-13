@@ -13,12 +13,6 @@ Je ne trouve rien de rapide après une recherche Google (quelques liens sur les 
 Après davantage de recherches, je trouve enfin l'ensemble des gares sur :
 - http://www.sncf.com/fr/geolocalisation
 - https://ressources.data.sncf.com/explore/dataset/referentiel-gares-voyageurs/
+- wikipedia
 
-J'aurais aimé trouver la gare la plus proche en 2 clics.
-
-## TODO
-
-- liens cliquables pour trainline
-- https://www.trainline.fr/search/tours/
-- la station la plus proche en gras
-- carte
+J'aurais aimé trouver la gare la plus proche de ma position en 2 clics.
