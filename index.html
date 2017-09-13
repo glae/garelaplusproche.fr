@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Gare la plus proche</title>
+  <script src="main.js"></script>
+
+</head>
+<style>
+* {
+  font-family: sans-serif;
+}
+button {
+  font-size: 160%;
+  background-color:#9BED00;
+  border: 2px solid #84B22D;
+}
+a {
+  color: #84B22D;
+}
+</style>
+
+<script>
+function search() {
+  document.getElementById("stations").innerHTML = "<i>Attente d'autorisation et chargement...</i>";
+
+  var geoSuccess = function(p) {
+     const res = findNearestStations(stations, p.coords.latitude, p.coords.longitude);
+      document.getElementById("stations").innerHTML = "Gares proches : " + res.map(function(e){return Object.keys(e)[0];});;
+  };
+  navigator.geolocation.getCurrentPosition(geoSuccess);
+};
+
+</script>
+
+<body>
+
+<h1>Trouvez la gare la plus proche.</h1>
+
+<div style="text-align:center">
+<button onclick="search()">Rechercher !</button>
+</div>
+
+<br>
+<br>
+<div id="stations">
+</div>
+
+
+<br>
+<br>
+<hr/>
+Ce site n'est pas affilié à la SNCF.
+<br>
+<a href="" target="_blank">Sources sur github</a> - <a href="motivations.html">Pourquoi ce site ?</a>
+
+</body>
+</html>
