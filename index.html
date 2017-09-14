@@ -82,7 +82,7 @@
 
         L.marker([userLat, userLong], {
           icon: homeIcon
-        }).addTo(map).bindPopup('Votre position');
+        }).addTo(map).bindPopup('<p style="font-size:150%">Votre position</p>');
 
         foundStations.forEach(function(e) {
           L.marker([latitude(e), longitude(e)], {
