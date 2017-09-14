@@ -55,7 +55,7 @@
     var map;
 
     function search() {
-      document.getElementById("stations").innerHTML = "<i>Demande d'autorisation / chargement en cours...</i><br><br>" +
+      document.getElementById("stations").innerHTML = "<i>Demande d'autorisation / chargement en cours...</i><br> <i>(si rien ne se passe c'est que vous n'avez pas accepté la géolocalisation)<i><br>" +
         "<div class='loader'></div>";
 
       var geoSuccess = function(p) {
@@ -92,7 +92,7 @@
             "<br><a href='https://www.trainline.fr/search/" + encodeURI(stationName(e).replace(/'/g, "%27")) + "/' target='_blank' style='color: #84B22D;'>Partir avec trainline</a></p>");
         });
 
-        document.getElementById("stations").innerHTML = "Voici les gares trouvées :";
+        document.getElementById("stations").innerHTML = "";
 
       };
 
