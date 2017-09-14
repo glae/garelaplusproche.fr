@@ -32,11 +32,11 @@ function stationName(e){
 }
 
 function latitude(e){
-  return Object.values(e)[0][0];
+  return Object.keys(e).map(k => e[k])[0][0];
 }
 
 function longitude(e){
-  return Object.values(e)[0][1];
+  return Object.keys(e).map(k => e[k])[0][1];
 }
 
 
