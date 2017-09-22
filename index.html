@@ -7,6 +7,7 @@
   <meta name="keywords" content="gare, la, plus, proche" />
   <meta name="viewport" content="width=device-width, user-scalable=no">
   <script src="main.js"></script>
+  <link rel="icon" type="image/svg+xml" href="./img/iconLocalisation.svg" />
   <link rel="stylesheet" type="text/css" href="index.css"/>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ==" crossorigin="" />
 
@@ -19,7 +20,7 @@
         document.getElementById("train").className += 'loader';
         document.getElementById("stations").className += "station-element";
         var warning = document.createElement("p");
-        warning.innerText= 'Si rien ne se passe, c\'est peut être que vous n\'avez pas accepté la géolocalisation';
+        warning.innerText= 'Si rien ne se passe, c\'est peut-être que vous n\'avez pas accepté la géolocalisation.';
         setTimeout(function(){
           document.getElementById("trainLoader-buttonSearch-container").appendChild(warning);
         }, 6000);
@@ -40,25 +41,25 @@
         console.log(foundStations);
 
         var trainIcon = new L.Icon({
-          iconUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Emojione_1F687.svg/200px-Emojione_1F687.svg.png',
-          iconSize: [32, 32]
+          iconUrl:'./img/tchou.png',
+          iconSize: [40, 40]
         });
 
         var homeIcon = new L.Icon({
-          iconUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Map_pin_icon.svg/200px-Map_pin_icon.svg.png',
-          iconSize: [31, 43]
+          iconUrl: './img/gps2.png',
+          iconSize: [40, 51]
         });
-
-        L.marker([userLat, userLong], {
-          icon: homeIcon
-        }).addTo(map).bindPopup('<p style="font-size:150%">Votre position</p>');
 
         foundStations.forEach(function(e) {
           L.marker([latitude(e), longitude(e)], {
             icon: trainIcon
           }).addTo(map).bindPopup("<p style='font-size:150%'>" + stationName(e) +
-            "<br><a href='https://www.trainline.fr/search/" + encodeURI(stationName(e).replace(/'/g, "%27")) + "/' target='_blank' style='color: #84B22D;'>Partir avec trainline</a></p>");
+            "<br><a href='https://www.trainline.fr/search/" + encodeURI(stationName(e).replace(/'/g, "%27")) + "/' target='_blank' style='color: #D35400; font-weight: 700; text-decoration: none;'>Partir avec trainline</a></p>");
         });
+
+        L.marker([userLat, userLong], {
+          icon: homeIcon
+        }).addTo(map).bindPopup('<p style="font-size:150%">Votre position</p>');
 
         document.getElementById('stations').innerHTML = '' +
           '<h2>Voici les gares trouvées :</h2>' +
