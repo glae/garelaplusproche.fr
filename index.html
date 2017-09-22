@@ -18,6 +18,11 @@
         document.getElementById("search-btn-container").className += 'active-button';
         document.getElementById("train").className += 'loader';
         document.getElementById("stations").className += "station-element";
+        var warning = document.createElement("p");
+        warning.innerText= 'Si rien ne se passe, c\'est peut être que vous n\'avez pas accepté la géolocalisation';
+        setTimeout(function(){
+          document.getElementById("trainLoader-buttonSearch-container").appendChild(warning);
+        }, 6000);
 
       var geoSuccess = function(p) {
         const mapContainerElement = document.getElementById('mapcontainer');
@@ -80,7 +85,7 @@
     <div id="mapcontainer">
       <div id="mapid"></div>
     </div>
-    <div class="trainLoader-buttonSearch-container">
+    <div id="trainLoader-buttonSearch-container">
       <div id="search-btn-container" onclick="search()" style="border-radius:50%">
         <button id="search-btn"><img src="./img/iconLocalisation.svg"  alt=""></button>
       </div>

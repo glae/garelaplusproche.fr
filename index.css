@@ -62,8 +62,13 @@ h1 span{
   min-width: 250px;
   padding-left: 1rem;
 }
-.map-container-element + .trainLoader-buttonSearch-container{
+.map-container-element + #trainLoader-buttonSearch-container{
   display: none;
+}
+#trainLoader-buttonSearch-container p{
+  font-style: italic;
+  font-weight: bold;
+  color: #D35400;
 }
 .station-element h2{
   color: #34495E;
@@ -87,6 +92,14 @@ h1 span{
   height: var(--button-size);
   border-radius: 50%;
   overflow: hidden;
+}
+#search-btn-container:active,
+#search-btn-container:hover{
+  box-shadow: -1px 2px 10px 3px rgba(52, 73, 94, 0.3);
+  -webkit-box-shadow: -1px 2px 10px 3px rgba(52, 73, 94, 0.3);
+  -moz-box-shadow: -1px 2px 10px 3px rgba(52, 73, 94, 0.3);
+  -ms-box-shadow: -1px 2px 10px 3px rgba(52, 73, 94, 0.3);
+  -o-box-shadow: -1px 2px 10px 3px rgba(52, 73, 94, 0.3);
 }
 
 #search-btn {
