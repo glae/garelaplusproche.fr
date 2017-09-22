@@ -1,0 +1,215 @@
+* {
+  font-family: sans-serif;
+  box-sizing: border-box;
+
+}
+body{
+  margin: 0;
+  min-height: 100vh;
+  background-color: #ECF0F1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+
+
+}
+header{
+  height: 20vh;
+  width: 100vw;
+
+}
+h1{
+  color: #34495E;
+  text-transform: capitalize;
+  font-family: "Verdana", sans-serif;
+  line-height: 4rem;
+  font-size: 5vh;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-align: center;
+  margin: 0 auto ;
+  padding: 3rem 0 0;
+  width: 100%;
+  min-width: 300px;
+}
+h1 span{
+  color: #D35400;
+  font-weight: 500;
+}
+/*List gare*/
+.station-search-container{
+  position: relative;
+  flex: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+
+}
+.station-element ul {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: center;
+  list-style: none;
+}
+.station-element ul li{
+  color: #34495E;
+  width: 30%;
+  min-width: 250px;
+  padding-left: 1rem;
+}
+.map-container-element + #trainLoader-buttonSearch-container{
+  display: none;
+}
+#trainLoader-buttonSearch-container p{
+  font-style: italic;
+  font-weight: bold;
+  color: #D35400;
+}
+.station-element h2{
+  color: #34495E;
+  margin: 2rem;
+}
+
+/*search-button*/
+#search-btn-container{
+  --position-button-top: 50%;
+  --button-size: 175px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: var(--position-button-top);
+  left: 50%;
+  margin-top: calc(-1 * (var(--button-size) / 1.5));
+  margin-left: calc(-1 * (var(--button-size) / 2));
+  width: var(--button-size);
+  height: var(--button-size);
+  border-radius: 50%;
+  overflow: hidden;
+}
+#search-btn-container:active,
+#search-btn-container:hover{
+  box-shadow: -1px 2px 10px 3px rgba(52, 73, 94, 0.3);
+  -webkit-box-shadow: -1px 2px 10px 3px rgba(52, 73, 94, 0.3);
+  -moz-box-shadow: -1px 2px 10px 3px rgba(52, 73, 94, 0.3);
+  -ms-box-shadow: -1px 2px 10px 3px rgba(52, 73, 94, 0.3);
+  -o-box-shadow: -1px 2px 10px 3px rgba(52, 73, 94, 0.3);
+}
+
+#search-btn {
+  font-size: 2rem;
+  width: var(--button-size);
+  height: var(--button-size);
+  position: absolute;
+  border: none;
+  background-color:hsl(24, 100%, 38%);
+  overflow: hidden;
+}
+#search-btn img{
+  position:relative;
+  z-index: 99;
+  width: 100px;
+}
+#search-btn:focus{
+  outline: none;
+}
+#search-btn:after{
+  content: '';
+  border-radius: 50%!important;
+  width: var(--button-size);
+  height: var(--button-size);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -110px;
+  margin-left: -110px;
+  background-color:#D35400
+}
+#train.loader{
+  background-image: url('./img/tchou.svg');
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -55px;
+  margin-left: -25px;
+  animation: myOrbit 4s linear infinite;
+
+}
+@keyframes myOrbit {
+  from { transform: rotate(0deg) translateY(-110px) rotate(0deg); }
+  to   { transform: rotate(-360deg) translateY(-110px) rotate(0deg); }
+}
+
+
+#mapcontainer.map-container-element + #search-btn-container.active-button{
+  display: none;
+}
+/*map-container*/
+.map-container-element{
+  min-width: 300px;
+  width: 100%;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+
+}
+.map-container-element #mapid{
+  border: 5px solid #FFF;
+  -moz-box-shadow: 4px 4px 6px -3px #D0D3D4;
+  -webkit-box-shadow: 4px 4px 6px -3px #D0D3D4;
+  -o-box-shadow: 4px 4px 6px -3px #D0D3D4;
+  box-shadow: 4px 4px 6px -3px #D0D3D4;
+  filter:progid:DXImageTransform.Microsoft.Shadow(color=#D0D3D4, Direction=134, Strength=6);
+}
+#mapid {
+  flex: 1;
+}
+
+
+footer{
+  color: #34495E;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 2vh;
+  text-align: center;
+  height: 10vh;
+}
+footer a{
+  color: #D35400;
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin-top: 1rem;
+  text-decoration: none;
+}
+
+
+/*Mobile*/
+@media(max-width: 720px){
+  header{
+    height: 11vh;
+  }
+  h1 {
+    font-size: 8vw;
+    line-height: 7.5vw;
+    padding-top: 1rem;
+  }
+  #stations{
+    display: none;
+  }
+  .map-container-element{
+    flex: 1;
+    padding: 0.2rem;
+  }
+
+}
