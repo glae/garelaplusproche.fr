@@ -7,60 +7,22 @@
   <meta name="keywords" content="gare, la, plus, proche" />
   <meta name="viewport" content="width=device-width, user-scalable=no">
   <script src="main.js"></script>
+  <link rel="stylesheet" type="text/css" href="index.css"/>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ==" crossorigin="" />
-  <style>
-    * {
-      font-family: sans-serif;
-    }
 
-    button {
-      font-size: 160%;
-      background-color: #9BED00;
-      border: 2px solid #84B22D;
-    }
-
-    a {
-      color: #84B22D;
-    }
-
-    .loader {
-      text-align: center;
-      border: 10px solid #f3f3f3;
-      /* Light grey */
-      border-top: 10px solid #9BED00;
-      /* Blue */
-      border-radius: 50%;
-      margin-left: auto;
-      margin-right: auto;
-      width: 40px;
-      height: 40px;
-      animation: spin 2s linear infinite;
-    }
-
-    @keyframes spin {
-      0% {
-        transform: rotate(0deg);
-      }
-      100% {
-        transform: rotate(360deg);
-      }
-    }
-
-    #mapid {
-      height: 400px;
-    }
-  </style>
   <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js" integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log==" crossorigin=""></script>
   <script>
     var map;
 
     function search() {
-      document.getElementById("stations").innerHTML = "<i>Demande d'autorisation / chargement en cours...</i><br> <i>(si rien ne se passe c'est que vous n'avez pas accepté la géolocalisation)<i><br>" +
-        "<div class='loader'></div>";
+        document.getElementById("search-btn-container").className += 'active-button';
+        document.getElementById("train").className += 'loader';
+        document.getElementById("stations").className += "station-element";
 
       var geoSuccess = function(p) {
-
-        document.getElementById('mapcontainer').innerHTML = "<div id='mapid'></div>";
+        const mapContainerElement = document.getElementById('mapcontainer');
+          mapContainerElement.innerHTML = "<div id='mapid'></div>";
+          mapContainerElement.className += "map-container-element";
 
         const userLat = p.coords.latitude;
         const userLong = p.coords.longitude;
@@ -70,6 +32,7 @@
         L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
 
         const foundStations = findNearestStations(stations, userLat, userLong);
+        console.log(foundStations);
 
         var trainIcon = new L.Icon({
           iconUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Emojione_1F687.svg/200px-Emojione_1F687.svg.png',
@@ -92,7 +55,11 @@
             "<br><a href='https://www.trainline.fr/search/" + encodeURI(stationName(e).replace(/'/g, "%27")) + "/' target='_blank' style='color: #84B22D;'>Partir avec trainline</a></p>");
         });
 
-        document.getElementById("stations").innerHTML = "";
+        document.getElementById('stations').innerHTML = '' +
+          '<h2>Voici les gares trouvées :</h2>' +
+          '<ul>' +
+          foundStations.map(gare => '<li>' + stationName(gare) + '</li>').join('') +
+          '</ul>';
 
       };
 
@@ -104,27 +71,31 @@
 </head>
 
 <body>
+  <header>
+    <h1>Trouvez la <span>gare</span><br/>la plus <span>proche</span></h1>
+  </header>
+  <section class="station-search-container">
+    <br>
+    <div id="stations"></div>
+    <div id="mapcontainer">
+      <div id="mapid"></div>
+    </div>
+    <div class="trainLoader-buttonSearch-container">
+      <div id="search-btn-container" onclick="search()" style="border-radius:50%">
+        <button id="search-btn"><img src="./img/iconLocalisation.svg"  alt=""></button>
+      </div>
+        <span id="train"></span>
+    </div>
+  </section>
 
-  <h1>Trouvez la gare la plus proche.</h1>
-
-  <div style="text-align:center">
-    <button onclick="search()">Rechercher !</button>
-  </div>
-
-  <br>
-  <div id="stations">
-  </div>
-
-  <br>
-  <div id="mapcontainer">
-    <div id="mapid"></div>
-  </div>
-  <br>
-
-  <br>
-  <br>
-  <hr/> Ce site n'est ni affilié à la SNCF ni à trainline. -
-  <a href="https://github.com/glae/lagarelaplusproche.fr">Sources sur github</a>
+  <footer>
+    <span>
+      - Ce site n'est ni affilié à la SNCF ni à trainline -
+    </span>
+    <a href="https://github.com/glae/lagarelaplusproche.fr">
+      Sources sur github
+    </a>
+  </footer>
 </body>
 
 </html>
