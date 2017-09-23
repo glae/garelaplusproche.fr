@@ -6,6 +6,7 @@
   <title>Gare la plus proche</title>
   <meta name="keywords" content="gare, la, plus, proche" />
   <meta name="viewport" content="width=device-width, user-scalable=no">
+  <script src="cities.js"></script>
   <script src="main.js"></script>
   <link rel="icon" type="image/png" href="./img/tchou.png" />
   <link rel="stylesheet" type="text/css" href="index.css"/>
@@ -15,30 +16,57 @@
   <script>
     var map;
 
-    function search() {
+    function searchFromGeolocation() {
         document.getElementById("search-btn-container").className += 'active-button';
         document.getElementById("train").className += 'loader';
         document.getElementById("stations").className += "station-element";
         var warning = document.createElement("p");
         warning.innerText= 'Si rien ne se passe, c\'est peut-être que vous n\'avez pas accepté la géolocalisation.';
         setTimeout(function(){
-          document.getElementById("trainLoader-buttonSearch-container").appendChild(warning);
+            document.getElementById("trainLoader-buttonSearch-container").appendChild(warning);
         }, 6000);
 
-      var geoSuccess = function(p) {
-        const mapContainerElement = document.getElementById('mapcontainer');
-          mapContainerElement.innerHTML = "<div id='mapid'></div>";
-          mapContainerElement.className += "map-container-element";
+        var geoSuccess = function(p) {
+            const mapContainerElement = document.getElementById('mapcontainer');
+            mapContainerElement.innerHTML = "<div id='mapid'></div>";
+            mapContainerElement.className += "map-container-element";
 
-        const userLat = p.coords.latitude;
-        const userLong = p.coords.longitude;
+            const foundStations = findNearestStations(stations, p.coords.latitude, p.coords.longitude);
 
+            displayResults(p.coords.latitude, p.coords.longitude, foundStations);
+        };
+
+        navigator.geolocation.getCurrentPosition(geoSuccess);
+    };
+    
+    function searchFromCityCoordinates() {
+        var search = document.getElementById('search-by-city-field').value;
+        var coordinates = cities.filter(function(city){
+            return city.name === search;
+        });
+        
+        if(coordinates.length  === 1)
+        {
+            document.getElementById('search-by-city-container').style.display = 'none';
+            
+            const mapContainerElement = document.getElementById('mapcontainer');
+            mapContainerElement.innerHTML = "<div id='mapid'></div>";
+            mapContainerElement.className += "map-container-element";
+            
+            var latitude = coordinates[0].lat;
+            var longitude = coordinates[0].long;
+            
+            const foundStations = findNearestStations(stations, parseFloat(latitude), parseFloat(longitude));
+
+            displayResults(latitude, longitude, foundStations);
+        }
+    }
+    
+    function displayResults(userLat, userLong, foundStations)
+    {
         map = L.map('mapid').setView([userLat, userLong], 11);
 
         L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
-
-        const foundStations = findNearestStations(stations, userLat, userLong);
-        console.log(foundStations);
 
         var trainIcon = new L.Icon({
           iconUrl:'./img/tchou.png',
@@ -66,13 +94,19 @@
           '<ul>' +
           foundStations.map(gare => '<li>' + stationName(gare) + '</li>').join('') +
           '</ul>';
+    }
+    
+    document.addEventListener("DOMContentLoaded", function(event)
+    {
+        cities.forEach(function(city) {
+            var cityOption = document.createElement("option");
+            cityOption.innerHTML = city.name;
+            cityOption.dataset.long = city.long;
+            cityOption.dataset.lat = city.lat;
+            document.getElementById("cities").appendChild(cityOption);
+        });
+    });
 
-      };
-
-
-      navigator.geolocation.getCurrentPosition(geoSuccess);
-
-    };
   </script>
 </head>
 
@@ -87,10 +121,16 @@
       <div id="mapid"></div>
     </div>
     <div id="trainLoader-buttonSearch-container">
-      <div id="search-btn-container" onclick="search()" style="border-radius:50%">
+      <div id="search-btn-container" onclick="searchFromGeolocation()" style="border-radius:50%">
         <button id="search-btn"><img src="./img/iconLocalisation.svg"  alt=""></button>
       </div>
         <span id="train"></span>
+    </div>
+    
+    <div id="search-by-city-container">
+        <input list="cities" type="text" id="search-by-city-field">
+        <datalist id="cities"></datalist>
+        <button id="search-by-city-btn" onclick="searchFromCityCoordinates()">Chercher par ville</button>
     </div>
   </section>
 
