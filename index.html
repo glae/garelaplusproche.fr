@@ -41,11 +41,11 @@
     
     function searchFromCityCoordinates() {
         var search = document.getElementById('search-by-city-field').value;
-        var coordinates = cities.filter(function(city){
-            return city.name === search;
+        var matchedCities = cities.filter(function(city){
+            return Object.keys(city)[0] === search;
         });
         
-        if(coordinates.length  === 1)
+        if(matchedCities.length  === 1)
         {
             document.getElementById('search-by-city-container').style.display = 'none';
             
@@ -53,8 +53,10 @@
             mapContainerElement.innerHTML = "<div id='mapid'></div>";
             mapContainerElement.className += "map-container-element";
             
-            var latitude = coordinates[0].lat;
-            var longitude = coordinates[0].long;
+            var searchedCity = matchedCities[0];
+            
+            var latitude = Object.keys(searchedCity).map(k => searchedCity[k])[0][0];
+            var longitude = Object.keys(searchedCity).map(k => searchedCity[k])[0][1];
             
             const foundStations = findNearestStations(stations, parseFloat(latitude), parseFloat(longitude));
 
@@ -100,9 +102,9 @@
     {
         cities.forEach(function(city) {
             var cityOption = document.createElement("option");
-            cityOption.innerHTML = city.name;
-            cityOption.dataset.long = city.long;
-            cityOption.dataset.lat = city.lat;
+            cityOption.innerHTML = Object.keys(city)[0];
+            cityOption.dataset.long = Object.keys(city).map(k => city[k])[0][1];
+            cityOption.dataset.lat = Object.keys(city).map(k => city[k])[0][0];
             document.getElementById("cities").appendChild(cityOption);
         });
     });
