@@ -47,6 +47,9 @@
         
         if(matchedCities.length  === 1)
         {
+            document.getElementById("search-btn-container").className += 'active-button';
+            document.getElementById("train").className += 'loader';
+            document.getElementById("stations").className += "station-element";
             document.getElementById('search-by-city-container').style.display = 'none';
             
             const mapContainerElement = document.getElementById('mapcontainer');
