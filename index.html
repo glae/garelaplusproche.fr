@@ -31,7 +31,7 @@
           mapContainerElement.className += "map-container-element";
 
         const userLat = p.coords.latitude;
-        const userLong = p.coords.longitude;
+        const userLong =  p.coords.longitude;
 
         map = L.map('mapid').setView([userLat, userLong], 11);
 
@@ -61,10 +61,20 @@
           icon: homeIcon
         }).addTo(map).bindPopup('<p style="font-size:150%">Votre position</p>');
 
+        var showedStations;
+        var others = ""
+        if (foundStations.length >= 24){
+          showedStations = foundStations.slice(0, 23);
+          others = "<li><b>et d'autres encore...<b></li>"
+        } else {
+          showedStations = foundStations;
+        }
+
         document.getElementById('stations').innerHTML = '' +
           '<h2>Voici les gares trouvées :</h2>' +
           '<ul>' +
-          foundStations.map(gare => '<li>' + stationName(gare) + '</li>').join('') +
+          showedStations.map(gare => '<li>' + stationName(gare) + '</li>').join('') +
+          others +
           '</ul>';
 
       };

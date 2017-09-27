@@ -57,9 +57,10 @@ h1 span{
 }
 .station-element ul li{
   color: #34495E;
-  width: 30%;
-  min-width: 250px;
+  width: 25%;
+  min-width: 200px;
   padding-left: 1rem;
+  font-size: 80%;
 }
 .map-container-element + #trainLoader-buttonSearch-container{
   display: none;
