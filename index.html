@@ -31,7 +31,7 @@
           mapContainerElement.className += "map-container-element";
 
         const userLat = p.coords.latitude;
-        const userLong =  p.coords.longitude;
+        const userLong = p.coords.longitude;
 
         map = L.map('mapid').setView([userLat, userLong], 11);
 
@@ -77,6 +77,9 @@
           others +
           '</ul>';
 
+          var mobileHeaderTitle = document.getElementById("header");
+          mobileHeaderTitle.className += "mobile";
+
       };
 
 
@@ -87,7 +90,7 @@
 </head>
 
 <body>
-  <header>
+  <header id="header">
     <h1>Trouvez la <span>gare</span><br/>la plus <span>proche</span></h1>
   </header>
   <section class="station-search-container">
