@@ -74,6 +74,34 @@ h1 span{
   margin: 2rem;
 }
 
+#search-by-city-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    bottom: 10%;
+}
+
+#search-by-city-field {
+    font-size: 2.5vh;
+    border-radius: 2px;
+    padding: 5px;
+    height: 25px;
+    border: 1px solid rgba(0,0,0,.15);
+}
+
+#search-by-city-btn {
+    background-color: #FFF;
+    border: 0;
+    cursor: pointer;
+    padding: 5px;
+    height: 25px;
+    width: 25px;
+    background-image: url('./img/search-by-city-icon.gif');
+    background-size: contain;
+}
+
 /*search-button*/
 #search-btn-container{
   --position-button-top: 50%;
