@@ -26,7 +26,7 @@ That's why I created this simple website.
 ## Motivations (in french)
 
 Nous sommes le 10 septembre 2017. 
-Je dois déposer quelqu'un à la gare la plus proche de Saint Aubin de Luigné. 
+Je dois déposer quelqu'un à la gare la plus proche de Saint Aubin de Luigné, pour qu'il rentre à Tours. 
 Je cherche `gare la plus proche` sur le web. 
 
 Je trouve peu d'informations : 
