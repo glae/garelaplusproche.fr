@@ -7,7 +7,7 @@ Available on: http://www.garelaplusproche.fr
 ## Datasource
 
 There is one input: 
-- train stations: https://ressources.data.sncf.com/explore/dataset/referentiel-gares-voyageurs/
+- train stations: https://ressources.data.sncf.com/explore/dataset/referentiel-gares-voyageurs/ (minimized in [source](https://github.com/glae/lagarelaplusproche.fr/blob/c442d5b520141b34f14778d230ad2c2d90f8e702/main.js#L1) with some [jq commands](https://github.com/glae/lagarelaplusproche.fr/blob/master/some_useful_commands_to_minimize_stations_file.sh))
 
 Two outputs: 
 - map : http://leafletjs.com/ (and [OSM](openstreetmap.org))
