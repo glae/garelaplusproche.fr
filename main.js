@@ -20,7 +20,7 @@ function findNearestStations(stations, lat, long, searchRadius = 0.10) {
   });
 
   if (nearestStations.length < 10) {
-    return findNearestStations(stations, lat, long, searchRadius + 0.05);
+    return findNearestStations(stations, lat, long, searchRadius + 0.025);
   } else {
     return nearestStations;
   }
