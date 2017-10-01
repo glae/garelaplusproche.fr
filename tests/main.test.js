@@ -42,7 +42,17 @@ test('As I user, I should get autocomplete addresses when I type "Le Man"', t =>
 
 });
 
-test.todo('______________________________________________ when I type "Par"');
+test('______________________________________________ when I type "Par"', t => {
+
+  t.deepEqual(labelsFromInput(  'Par'),
+                                [ 'Paris (75)',
+                                  'Parthenay (79)',
+                                  'Parignargues (30)',
+                                  'Parpeville (02)',
+                                  'Parey-Saint-Césaire (54)' ]);
+
+});
+
 test.todo('______________________________________________ when I type "Pe"');
 test.todo('______________________________________________ when I type "R"');
 test.todo('______________________________________________ when I type "Saint-au"');
