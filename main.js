@@ -31,6 +31,7 @@ function stationName(e){
   return Object.keys(e)[0];
 }
 
+//Object.values is ES2017
 function latitude(e){
   return Object.keys(e).map(k => e[k])[0][0];
 }
@@ -39,9 +40,36 @@ function longitude(e){
   return Object.keys(e).map(k => e[k])[0][1];
 }
 
+function createProposals(input){
+  const cleanInput = input.trim();
+  //TODO http 'https://api-adresse.data.gouv.fr/search/?q=Saint-Au&type=municipality'
+  return proposalsFrom(JSON.parse("TODO"));
+}
 
+function proposalsFrom(jsonAddresses){
+
+  const addresses = jsonAddresses.features.map(function(address){
+    return {label: (address.properties.name + ' (' + address.properties.postcode.substring(0, 2) + ')'),
+          lat: address.geometry.coordinates[0],
+          lon: address.geometry.coordinates[1]}
+    });
+
+  let uniqueAddresses=[];
+  addresses.forEach( function(a) {
+    if (!uniqueAddresses.filter(u => u.label == a.label).length > 0){
+      uniqueAddresses.push(a);
+    }
+  });
+  return uniqueAddresses;
+}
+
+
+
+//------------------------------------------------------------------------------
 //for unit tests
 if (typeof module !== 'undefined'){
   module.exports.stations = stations;
   module.exports.findNearestStations = findNearestStations;
+  module.exports.proposalsFrom = proposalsFrom;
+
 }
