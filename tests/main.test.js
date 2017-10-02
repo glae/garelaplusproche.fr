@@ -42,6 +42,7 @@ test('As I user, I should get autocomplete addresses when I type "Le Man"', t =>
 
 });
 
+
 test('______________________________________________ when I type "Par"', t => {
 
   t.deepEqual(labelsFromInput(  'Par'),
@@ -53,18 +54,73 @@ test('______________________________________________ when I type "Par"', t => {
 
 });
 
-test.todo('______________________________________________ when I type "Pe"');
-test.todo('______________________________________________ when I type "R"');
-test.todo('______________________________________________ when I type "Saint-au"');
-test.todo('______________________________________________ when I type "Tours"');
-test.todo('______________________________________________ when I type "vair"');
-test.todo('______________________________________________ when I type "Mons"');
+test('______________________________________________ when I type "Pe"', t => {
 
+  t.deepEqual(labelsFromInput(  'Pe'),
+                              [ 'Saint-Pé-de-Bigorre (65)',
+                                'Saint-Pée-sur-Nivelle (64)',
+                                'Saint-Pé-de-Léren (64)',
+                                'Saint-Pé-d\'Ardet (31)',
+                                'Notre-Dame-du-Pé (72)' ]);
+
+});
+
+
+test('______________________________________________ when I type "R"', t => {
+
+  t.deepEqual(labelsFromInput(  'R'),
+                              [ 'Rue (80)',
+                            'Vatteville-la-Rue (76)',
+                            'La Rue-Saint-Pierre (76)',
+                            'Les Rues-des-Vignes (59)',
+                            'Saulon-la-Rue (21)' ]);
+
+});
+
+
+test('______________________________________________ when I type "Saint-au"', t => {
+
+  t.deepEqual(labelsFromInput(  'Saint-au'),
+                                [ 'Saint-Augustin (62)',
+                              'Saint-Aubin (02)',
+                              'Saint-Aubert (59)',
+                              'Saint-Aubin (62)' ]);
+
+});
+
+
+test('______________________________________________ when I type "Tours"', t => {
+
+  t.deepEqual(labelsFromInput(  'Tours'),
+                                [ 'Tours (37)', 'Tours-en-Savoie (73)', 'Tours-sur-Marne (51)' ]);
+
+});
+
+
+test('______________________________________________ when I type "Vair"', t => {
+
+  t.deepEqual(labelsFromInput(  'Vair'),
+                              [ 'Vaires-sur-Marne (77)',
+                            'Vairé (85)',
+                            'Vaire (25)',
+                            'Vair-sur-Loire (44)',
+                            'Vaire-sous-Corbie (80)' ]);
+
+});
+
+
+test('______________________________________________ when I type "Mons"', t => {
+
+  t.deepEqual(labelsFromInput(  'Mons'),
+                              [ 'Mons (83)', 'Mons (30)', 'Mons (16)', 'Mons (31)', 'Mons (34)' ]);
+
+});
 
 
 
 function labelsFromInput(word){
   return proposalsFrom(userInput(word)).map(n=>n.label);
+
 }
 
 function userInput(word){
