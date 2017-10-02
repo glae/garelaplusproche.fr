@@ -31,6 +31,7 @@ function stationName(e){
   return Object.keys(e)[0];
 }
 
+//Object.values is ES2017
 function latitude(e){
   return Object.keys(e).map(k => e[k])[0][0];
 }
@@ -39,9 +40,44 @@ function longitude(e){
   return Object.keys(e).map(k => e[k])[0][1];
 }
 
+function createProposals(input, onAPIResultComplete){
+  const cleanInput = input.trim();
+  var request = new XMLHttpRequest();
+  request.onreadystatechange = function (response) {
+      if (request.readyState === 4) {
+          if (request.status === 200) {
+              onAPIResultComplete(proposalsFrom(JSON.parse(request.responseText)));
+          }
+      }
+  };
+  request.open('GET', 'https://api-adresse.data.gouv.fr/search/?q='+ cleanInput +'&type=municipality', true);
+  request.send();
+}
 
+function proposalsFrom(jsonAddresses){
+  let uniqueAddresses=[];
+  if(jsonAddresses.features == null) return uniqueAddresses;
+
+  const addresses = jsonAddresses.features.map(function(address){
+    return {label: (address.properties.name + ' (' + address.properties.postcode.substring(0, 2) + ')'),
+          lat: address.geometry.coordinates[1],
+          lon: address.geometry.coordinates[0]}
+    });
+
+  addresses.forEach(function(a) {
+    if (!uniqueAddresses.filter(u => u.label == a.label).length > 0){
+      uniqueAddresses.push(a);
+    }
+  });
+  return uniqueAddresses;
+}
+
+
+//------------------------------------------------------------------------------
 //for unit tests
 if (typeof module !== 'undefined'){
   module.exports.stations = stations;
   module.exports.findNearestStations = findNearestStations;
+  module.exports.proposalsFrom = proposalsFrom;
+
 }

@@ -1,9 +1,9 @@
 * {
   font-family: sans-serif;
   box-sizing: border-box;
-
 }
-body{
+
+body {
   margin: 0;
   min-height: 100vh;
   background-color: #ECF0F1;
@@ -11,33 +11,36 @@ body{
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-
-
 }
-header{
+
+header {
   height: 20vh;
   width: 100vw;
-
 }
-h1{
+
+h1 {
   color: #34495E;
   font-family: "Verdana", sans-serif;
-  line-height: 4rem;
+  /*line-height: 4rem;*/
   font-size: 5vh;
   font-weight: 500;
   letter-spacing: 2px;
   text-align: center;
-  margin: 0 auto ;
+  margin: 0 auto;
   padding: 3rem 0 0;
   width: 100%;
   min-width: 300px;
 }
-h1 span{
+
+.highlight {
   color: #D35400;
   font-weight: 500;
 }
+
+
 /*List gare*/
-.station-search-container{
+
+.station-search-container {
   position: relative;
   flex: 1;
   width: 100%;
@@ -45,8 +48,8 @@ h1 span{
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-
 }
+
 .station-element ul {
   display: flex;
   flex-direction: row;
@@ -55,28 +58,37 @@ h1 span{
   align-items: center;
   list-style: none;
 }
-.station-element ul li{
+
+.station-element ul li {
   color: #34495E;
   width: 25%;
   min-width: 200px;
   padding-left: 1rem;
   font-size: 80%;
 }
-.map-container-element + #trainLoader-buttonSearch-container{
+
+.map-container-element+#trainLoader-buttonSearch-container {
   display: none;
 }
-#trainLoader-buttonSearch-container p{
-  font-style: italic;
+
+#trainLoader-buttonSearch-container p {
   font-weight: bold;
   color: #D35400;
 }
-.station-element h2{
+
+.station-element h2 {
   color: #34495E;
   margin: 2rem;
 }
 
+#error-city {
+  font-weight: bold;
+  color: red;
+}
+
 /*search-button*/
-#search-btn-container{
+
+#search-btn-container {
   --position-button-top: 50%;
   --button-size: 175px;
   display: flex;
@@ -93,8 +105,8 @@ h1 span{
   border-radius: 50%;
   overflow: hidden;
 }
-#search-btn-container:active,
-#search-btn-container:hover{
+
+#search-btn-container:active, #search-btn-container:hover {
   box-shadow: -1px 2px 10px 3px rgba(52, 73, 94, 0.3);
   -webkit-box-shadow: -1px 2px 10px 3px rgba(52, 73, 94, 0.3);
   -moz-box-shadow: -1px 2px 10px 3px rgba(52, 73, 94, 0.3);
@@ -108,18 +120,21 @@ h1 span{
   height: var(--button-size);
   position: absolute;
   border: none;
-  background-color:hsl(24, 100%, 38%);
+  background-color: hsl(24, 100%, 38%);
   overflow: hidden;
 }
-#search-btn img{
-  position:relative;
+
+#search-btn img {
+  position: relative;
   z-index: 99;
   width: 100px;
 }
-#search-btn:focus{
+
+#search-btn:focus {
   outline: none;
 }
-#search-btn:after{
+
+#search-btn:after {
   content: '';
   border-radius: 50%!important;
   width: var(--button-size);
@@ -129,9 +144,28 @@ h1 span{
   left: 50%;
   margin-top: -110px;
   margin-left: -110px;
-  background-color:#D35400
+  background-color: #D35400
 }
-#train.loader{
+
+#station-search-container-by-city * {
+  line-height: 2rem;
+  font-size: 2vh;
+}
+
+#search-by-city-button {
+  color: #D35400;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-decoration: none;
+}
+
+#station-search-container-by-city-input {
+  width: 200px;
+}
+.station-search-container-by-city-label {
+  color: #34495E;
+}
+#train.loader {
   background-image: url('./img/tchou.svg');
   width: 50px;
   height: 50px;
@@ -141,90 +175,92 @@ h1 span{
   margin-top: -55px;
   margin-left: -25px;
   animation: myOrbit 4s linear infinite;
-
 }
 @keyframes myOrbit {
-  from { transform: rotate(0deg) translateY(-110px) rotate(0deg); }
-  to   { transform: rotate(-360deg) translateY(-110px) rotate(0deg); }
+  from {
+    transform: rotate(0deg) translateY(-110px) rotate(0deg);
+  }
+
+  to {
+    transform: rotate(-360deg) translateY(-110px) rotate(0deg);
+  }
 }
-
-
-#mapcontainer.map-container-element + #search-btn-container.active-button{
+#mapcontainer.map-container-element+#search-btn-container.active-button {
   display: none;
 }
+
+#station-search-container-by-city.active-button{
+  display: none;
+  height: 0;
+}
+
 /*map-container*/
-.map-container-element{
+.map-container-element {
   min-width: 300px;
   width: 100%;
   padding: 1rem;
   display: flex;
   flex-direction: column;
   flex: 1;
-
 }
-.map-container-element #mapid{
+.map-container-element #mapid {
   border: 5px solid #FFF;
   -moz-box-shadow: 4px 4px 6px -3px #D0D3D4;
   -webkit-box-shadow: 4px 4px 6px -3px #D0D3D4;
   -o-box-shadow: 4px 4px 6px -3px #D0D3D4;
   box-shadow: 4px 4px 6px -3px #D0D3D4;
-  filter:progid:DXImageTransform.Microsoft.Shadow(color=#D0D3D4, Direction=134, Strength=6);
+  filter: progid:DXImageTransform.Microsoft.Shadow(color=#D0D3D4, Direction=134, Strength=6);
 }
 #mapid {
   flex: 1;
 }
-
-
-footer{
+footer {
   color: #34495E;
-  display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
   font-size: 2vh;
   text-align: center;
-  height: 10vh;
 }
-footer a{
+footer a {
   color: #D35400;
-  font-weight: 700;
-  letter-spacing: 1px;
-  margin-top: 1rem;
   text-decoration: none;
 }
 
-
 /*Mobile*/
+
 /*landscape mode */
-@media(max-width: 800px){
+@media(max-width: 800px) {
   header {
     visibility: hidden;
   }
+
   footer {
     visibility: hidden;
   }
-  .leaflet-container{
+
+  .leaflet-container {
     overflow: visible !important;
   }
 }
+
 /*portrait*/
-@media(max-width: 450px){
+@media(max-width: 450px) {
   header {
     visibility: visible;
   }
+
   footer {
     visibility: visible;
   }
-  .leaflet-container{
-    overflow: hidden  !important;
+
+  .leaflet-container {
+    overflow: hidden !important;
   }
-
-
 }
 
 /*all mobile config*/
-@media(max-width: 800px){
-  header{
+@media(max-width: 800px) {
+  header {
     height: 11vh;
   }
 
@@ -233,12 +269,13 @@ footer a{
     line-height: 7.5vw;
     padding-top: 1rem;
   }
-  #stations{
+
+  #stations {
     display: none;
   }
-  .map-container-element{
+
+  .map-container-element {
     flex: 1;
     padding: 0.2rem;
   }
-
 }

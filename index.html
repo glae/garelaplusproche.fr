@@ -8,90 +8,14 @@
   <meta name="viewport" content="width=device-width, user-scalable=no">
   <script src="main.js"></script>
   <link rel="icon" type="image/png" href="./img/tchou.png" />
-  <link rel="stylesheet" type="text/css" href="index.css"/>
+  <link rel="stylesheet" type="text/css" href="index.css" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ==" crossorigin="" />
-
   <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js" integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log==" crossorigin=""></script>
-  <script>
-    var map;
-
-    function search() {
-        document.getElementById("search-btn-container").className += 'active-button';
-        document.getElementById("train").className += 'loader';
-        document.getElementById("stations").className += "station-element";
-        var warning = document.createElement("p");
-        warning.innerText= 'Si rien ne se passe, c\'est peut-être que vous n\'avez pas accepté la géolocalisation.';
-        setTimeout(function(){
-          document.getElementById("trainLoader-buttonSearch-container").appendChild(warning);
-        }, 6000);
-
-      var geoSuccess = function(p) {
-        const mapContainerElement = document.getElementById('mapcontainer');
-          mapContainerElement.innerHTML = "<div id='mapid'></div>";
-          mapContainerElement.className += "map-container-element";
-
-        const userLat = p.coords.latitude;
-        const userLong = p.coords.longitude;
-
-        map = L.map('mapid').setView([userLat, userLong], 11);
-
-        L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
-
-        const foundStations = findNearestStations(stations, userLat, userLong);
-        console.log(foundStations);
-
-        var trainIcon = new L.Icon({
-          iconUrl:'./img/tchou.png',
-          iconSize: [40, 40]
-        });
-
-        var homeIcon = new L.Icon({
-          iconUrl: './img/gps2.png',
-          iconSize: [40, 51]
-        });
-
-        foundStations.forEach(function(e) {
-          L.marker([latitude(e), longitude(e)], {
-            icon: trainIcon
-          }).addTo(map).bindPopup("<p style='font-size:150%'>" + stationName(e) +
-            "<br><a href='https://www.trainline.fr/search/" + encodeURI(stationName(e).replace(/'/g, "%27")) + "/' target='_blank' style='color: #D35400; font-weight: 700; text-decoration: none;'>Partir avec trainline</a></p>");
-        });
-
-        L.marker([userLat, userLong], {
-          icon: homeIcon
-        }).addTo(map).bindPopup('<p style="font-size:150%">Votre position</p>');
-
-        var showedStations;
-        var others = ""
-        if (foundStations.length >= 24){
-          showedStations = foundStations.slice(0, 23);
-          others = "<li><b>et d'autres encore...<b></li>"
-        } else {
-          showedStations = foundStations;
-        }
-
-        document.getElementById('stations').innerHTML = '' +
-          '<h2>Voici les gares trouvées :</h2>' +
-          '<ul>' +
-          showedStations.map(gare => '<li>' + stationName(gare) + '</li>').join('') +
-          others +
-          '</ul>';
-
-          var mobileHeaderTitle = document.getElementById("header");
-          mobileHeaderTitle.className += "mobile";
-
-      };
-
-
-      navigator.geolocation.getCurrentPosition(geoSuccess);
-
-    };
-  </script>
 </head>
 
 <body>
   <header id="header">
-    <h1>Trouvez la <span>gare</span><br/>la plus <span>proche</span></h1>
+    <h1>Trouvez la <span class="highlight">gare</span><br/>la plus <span class="highlight">proche</span></h1>
   </header>
   <section class="station-search-container">
     <br>
@@ -99,22 +23,151 @@
     <div id="mapcontainer">
       <div id="mapid"></div>
     </div>
+
     <div id="trainLoader-buttonSearch-container">
-      <div id="search-btn-container" onclick="search()" style="border-radius:50%">
+      <div id="search-btn-container" onclick="searchByGeolocation()" style="border-radius:50%">
         <button id="search-btn"><img src="./img/iconLocalisation.svg"  alt=""></button>
       </div>
-        <span id="train"></span>
+      <span id="train"></span>
     </div>
   </section>
 
   <footer>
+    <div id="station-search-container-by-city">
+      <div id="error-city"></div>
+      <span class="station-search-container-by-city-label">ou</span>
+      <input id="station-search-container-by-city-input" list="filtered-cities" placeholder="entrez votre ville" />
+      <datalist id="filtered-cities"></datalist>
+      <button id="search-by-city-button" onclick="searchByCity()">Chercher cette ville</button>
+    </div>
+    <br><br>
     <span>
-      - Ce site n'est ni affilié à la SNCF ni à trainline -
+      Ce site n'est ni affilié à la SNCF ni à trainline |
     </span>
     <a href="https://github.com/glae/lagarelaplusproche.fr">
       Sources sur github
     </a>
   </footer>
 </body>
+
+
+<script>
+  var map;
+  var manualLat;
+  var manualLon;
+  var manualCity;
+
+  initSearchByCityInput();
+
+  function initSearchByCityInput() {
+
+    const input = document.getElementById("station-search-container-by-city-input");
+    input.addEventListener("input", function(e) {
+
+      function onAPIResultComplete(proposals) {
+        const cities = document.getElementById('filtered-cities');
+        cities.innerHTML = "";
+        proposals.forEach(
+          function(city) {
+            var option = document.createElement('option');
+            option.value = city.label;
+            cities.appendChild(option);
+            manualLat = city.lat;
+            manualLon = city.lon;
+            manualCity = city.label;
+          });
+      }
+
+      document.getElementById("error-city").innerHTML='';
+      createProposals(input.value, onAPIResultComplete);
+    });
+  }
+
+
+  function hideSearchFields(){
+    document.getElementById("search-btn-container").className += 'active-button';
+    document.getElementById("train").className += 'loader';
+    document.getElementById("stations").className += "station-element";
+    document.getElementById("station-search-container-by-city").className += 'active-button';
+  }
+
+  function searchByCity() {
+    if(manualLat==null || manualLon==null){
+      var warning = document.getElementById("error-city");
+      warning.innerText = 'Nous n\'avons pas pu localiser la ville saisie, veuillez recommencer.';
+
+    } else {
+      hideSearchFields();
+      search(manualLat, manualLon, manualCity);
+    }
+  }
+
+  function searchByGeolocation() {
+
+    hideSearchFields();
+    var warning = document.createElement("p");
+    warning.innerText = 'Si rien ne se passe, c\'est peut-être que vous n\'avez pas accepté la géolocalisation.';
+    setTimeout(function() {
+      document.getElementById("trainLoader-buttonSearch-container").appendChild(warning);
+    }, 6000);
+
+    var geoSuccess = function(p) {
+      const userLat = p.coords.latitude;
+      const userLong = p.coords.longitude;
+      search(userLat, userLong);
+    };
+    navigator.geolocation.getCurrentPosition(geoSuccess);
+  }
+
+
+  function search(userLat, userLong, positionLabel='Votre position') {
+
+    const mapContainerElement = document.getElementById('mapcontainer');
+    mapContainerElement.innerHTML = "<div id='mapid'></div>";
+    mapContainerElement.className += "map-container-element";
+
+    map = L.map('mapid').setView([userLat, userLong], 11);
+    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
+
+    const foundStations = findNearestStations(stations, userLat, userLong);
+
+    var trainIcon = new L.Icon({
+      iconUrl: './img/tchou.png',
+      iconSize: [40, 40]
+    });
+    var homeIcon = new L.Icon({
+      iconUrl: './img/gps2.png',
+      iconSize: [40, 51]
+    });
+
+    foundStations.forEach(function(e) {
+      L.marker([latitude(e), longitude(e)], {
+        icon: trainIcon
+      }).addTo(map).bindPopup("<p style='font-size:150%'>" + stationName(e) +
+        "<br><a href='https://www.trainline.fr/search/" + encodeURI(stationName(e).replace(/'/g, "%27")) + "/' target='_blank' style='color: #D35400; font-weight: 700; text-decoration: none;'>Partir avec trainline</a></p>");
+    });
+
+    L.marker([userLat, userLong], {
+      icon: homeIcon
+    }).addTo(map).bindPopup('<p style="font-size:150%">' + positionLabel + '</p>');
+
+    var showedStations;
+    var others = ""
+    if (foundStations.length >= 24) {
+      showedStations = foundStations.slice(0, 23);
+      others = "<li><b>et d'autres encore...<b></li>"
+    } else {
+      showedStations = foundStations;
+    }
+
+    document.getElementById('stations').innerHTML = '' +
+      '<h2>Voici les gares trouvées :</h2><ul>' +
+      showedStations.map(gare => '<li>' + stationName(gare) + '</li>').join('') +
+      others + '</ul>';
+
+    var mobileHeaderTitle = document.getElementById("header");
+    mobileHeaderTitle.className += "mobile";
+  }
+</script>
 
 </html>
