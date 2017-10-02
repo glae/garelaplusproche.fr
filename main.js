@@ -40,29 +40,37 @@ function longitude(e){
   return Object.keys(e).map(k => e[k])[0][1];
 }
 
-function createProposals(input){
+function createProposals(input, onAPIResultComplete){
   const cleanInput = input.trim();
-  //TODO http 'https://api-adresse.data.gouv.fr/search/?q=Saint-Au&type=municipality'
-  return proposalsFrom(JSON.parse("TODO"));
+  var request = new XMLHttpRequest();
+  request.onreadystatechange = function (response) {
+      if (request.readyState === 4) {
+          if (request.status === 200) {
+              onAPIResultComplete(proposalsFrom(JSON.parse(request.responseText)));
+          }
+      }
+  };
+  request.open('GET', 'https://api-adresse.data.gouv.fr/search/?q='+ cleanInput +'&type=municipality', true);
+  request.send();
 }
 
 function proposalsFrom(jsonAddresses){
+  let uniqueAddresses=[];
+  if(jsonAddresses.features == null) return uniqueAddresses;
 
   const addresses = jsonAddresses.features.map(function(address){
     return {label: (address.properties.name + ' (' + address.properties.postcode.substring(0, 2) + ')'),
-          lat: address.geometry.coordinates[0],
-          lon: address.geometry.coordinates[1]}
+          lat: address.geometry.coordinates[1],
+          lon: address.geometry.coordinates[0]}
     });
 
-  let uniqueAddresses=[];
-  addresses.forEach( function(a) {
+  addresses.forEach(function(a) {
     if (!uniqueAddresses.filter(u => u.label == a.label).length > 0){
       uniqueAddresses.push(a);
     }
   });
   return uniqueAddresses;
 }
-
 
 
 //------------------------------------------------------------------------------
