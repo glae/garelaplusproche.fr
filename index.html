@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <title>Gare la plus proche</title>
-  <meta name="keywords" content="gare, la, plus, proche" />
+  <meta name="keywords" content="gare, proche, train, proximité, plus" />
   <meta name="viewport" content="width=device-width, user-scalable=no">
   <script src="main.js"></script>
   <link rel="icon" type="image/png" href="./img/tchou.png" />
@@ -26,7 +26,7 @@
 
     <div id="trainLoader-buttonSearch-container">
       <div id="search-btn-container" onclick="searchByGeolocation()" style="border-radius:50%">
-        <button id="search-btn"><img src="./img/iconLocalisation.svg"  alt=""></button>
+        <button id="search-btn"><img src="./img/search.svg"  alt=""></button>
       </div>
       <span id="train"></span>
     </div>
@@ -53,11 +53,9 @@
 
 <script>
   var map;
-  var manualLat;
-  var manualLon;
-  var manualCity;
-
+  var lastProposedCities = [];
   initSearchByCityInput();
+
 
   function initSearchByCityInput() {
 
@@ -67,40 +65,43 @@
       function onAPIResultComplete(proposals) {
         const cities = document.getElementById('filtered-cities');
         cities.innerHTML = "";
+        lastProposedCities = proposals;
         proposals.forEach(
           function(city) {
             var option = document.createElement('option');
             option.value = city.label;
             cities.appendChild(option);
-            manualLat = city.lat;
-            manualLon = city.lon;
-            manualCity = city.label;
           });
       }
 
-      document.getElementById("error-city").innerHTML='';
+      document.getElementById("error-city").innerHTML = '';
       createProposals(input.value, onAPIResultComplete);
     });
   }
 
 
-  function hideSearchFields(){
+  function hideSearchFields() {
     document.getElementById("search-btn-container").className += 'active-button';
     document.getElementById("train").className += 'loader';
     document.getElementById("stations").className += "station-element";
     document.getElementById("station-search-container-by-city").className += 'active-button';
   }
 
+
   function searchByCity() {
-    if(manualLat==null || manualLon==null){
+
+    const cityInput = document.getElementById("station-search-container-by-city-input").value;
+    const selectedCity = lastProposedCities.filter(u => u.label == cityInput.trim())[0];
+
+    if (selectedCity == null) {
       var warning = document.getElementById("error-city");
       warning.innerText = 'Nous n\'avons pas pu localiser la ville saisie, veuillez recommencer.';
-
     } else {
       hideSearchFields();
-      search(manualLat, manualLon, manualCity);
+      search(selectedCity.lat, selectedCity.lon, selectedCity.label);
     }
   }
+
 
   function searchByGeolocation() {
 
@@ -120,7 +121,7 @@
   }
 
 
-  function search(userLat, userLong, positionLabel='Votre position') {
+  function search(userLat, userLong, positionLabel = 'Votre position') {
 
     const mapContainerElement = document.getElementById('mapcontainer');
     mapContainerElement.innerHTML = "<div id='mapid'></div>";
@@ -136,7 +137,7 @@
       iconSize: [40, 40]
     });
     var homeIcon = new L.Icon({
-      iconUrl: './img/gps2.png',
+      iconUrl: './img/yourPosition.png',
       iconSize: [40, 51]
     });
 
