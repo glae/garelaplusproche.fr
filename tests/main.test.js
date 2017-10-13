@@ -22,7 +22,7 @@ test('Anetz should have nearest stations', t => {
 test('Saint-Aubin-de-Luigné should have nearest stations', t => {
 
   const foundStations = findNearestStations(stations, 47.340512, -0.675747);
-  t.is(foundStations.length, 10);
+  t.is(foundStations.length, 15);
 
 });
 

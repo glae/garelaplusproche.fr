@@ -152,11 +152,15 @@ h1 {
   font-size: 2vh;
 }
 
-#search-by-city-button {
+#search-by-city-button, #big-button-description {
   color: #D35400;
   font-weight: 700;
   letter-spacing: 1px;
   text-decoration: none;
+}
+
+#big-button-description {
+  text-align:center;
 }
 
 #station-search-container-by-city-input {
@@ -238,6 +242,10 @@ footer a {
     visibility: hidden;
   }
 
+  #big-button-description {
+    visibility: hidden;
+  }
+
   .leaflet-container {
     overflow: visible !important;
   }
@@ -250,6 +258,10 @@ footer a {
   }
 
   footer {
+    visibility: visible;
+  }
+
+  #big-button-description {
     visibility: visible;
   }
 
