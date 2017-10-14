@@ -36,7 +36,7 @@ Je trouve peu d'informations :
 - Je finis tant bien que mal par trouver une gare proche (Chalonnes) via Google Maps.
 
 Après davantage de recherche, je trouve enfin l'ensemble des gares sur :
-- http://www.sncf.com/fr/geolocalisation (traffic temps réel)
+- http://www.sncf.com/fr/geolocalisation (traffic temps réel, "pas optimisé sur mobile")
 - https://ressources.data.sncf.com/explore/dataset/referentiel-gares-voyageurs/
 - https://fr.wikipedia.org/wiki/Liste_de_gares_en_France
 
