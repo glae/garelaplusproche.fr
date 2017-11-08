@@ -1,4 +1,8 @@
 * {
+  --primary : #34495E;
+  --primaryOpacity : rgba(52, 73, 94, 0.3);
+  --action : #D35400;
+  --actionOpacity : rgba(211, 84, 0, 0.3);
   font-family: sans-serif;
   box-sizing: border-box;
 }
@@ -19,7 +23,7 @@ header {
 }
 
 h1 {
-  color: #34495E;
+  color: var(--primary);
   font-family: "Verdana", sans-serif;
   /*line-height: 4rem;*/
   font-size: 5vh;
@@ -60,7 +64,7 @@ h1 {
 }
 
 .station-element ul li {
-  color: #34495E;
+  color: var(--primary);
   width: 25%;
   min-width: 200px;
   padding-left: 1rem;
@@ -70,14 +74,23 @@ h1 {
 .map-container-element+#trainLoader-buttonSearch-container {
   display: none;
 }
-
+#trainLoader-buttonSearch-container{
+  --button-size: 110px;
+  width: 100vw;
+  min-height: 200px;
+  display: flex;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  margin-top: calc(-1 * (200px / 2));
+}
 #trainLoader-buttonSearch-container p {
   font-weight: bold;
   color: #D35400;
 }
 
 .station-element h2 {
-  color: #34495E;
+  color: var(--primary);
   margin: 2rem;
 }
 
@@ -89,17 +102,10 @@ h1 {
 /*search-button*/
 
 #search-btn-container {
-  --position-button-top: 50%;
-  --button-size: 175px;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  position: absolute;
-  top: var(--position-button-top);
-  left: 50%;
-  margin-top: calc(-1 * (var(--button-size) / 1.5));
-  margin-left: calc(-1 * (var(--button-size) / 2));
   width: var(--button-size);
   height: var(--button-size);
   border-radius: 50%;
@@ -107,14 +113,18 @@ h1 {
 }
 
 #search-btn-container:active, #search-btn-container:hover {
-  box-shadow: -1px 2px 10px 3px rgba(52, 73, 94, 0.3);
-  -webkit-box-shadow: -1px 2px 10px 3px rgba(52, 73, 94, 0.3);
-  -moz-box-shadow: -1px 2px 10px 3px rgba(52, 73, 94, 0.3);
-  -ms-box-shadow: -1px 2px 10px 3px rgba(52, 73, 94, 0.3);
-  -o-box-shadow: -1px 2px 10px 3px rgba(52, 73, 94, 0.3);
+  box-shadow: -1px 2px 10px 3px var(--primaryOpacity);
+  -webkit-box-shadow: -1px 2px 10px 3px var(--primaryOpacity);
+  -moz-box-shadow: -1px 2px 10px 3px var(--primaryOpacity);
+  -ms-box-shadow: -1px 2px 10px 3px var(--primaryOpacity);
+  -o-box-shadow: -1px 2px 10px 3px var(--primaryOpacity);
 }
 
-#search-btn {
+.search-btn-container{
+  width: var(--button-size);
+  height: var(--button-size);
+}
+#search-button {
   font-size: 2rem;
   width: var(--button-size);
   height: var(--button-size);
@@ -122,19 +132,20 @@ h1 {
   border: none;
   background-color: hsl(24, 100%, 38%);
   overflow: hidden;
+  border-radius: 50%;
 }
 
-#search-btn img {
+#search-button img {
   position: relative;
   z-index: 99;
-  width: 100px;
+  width: 60px;
 }
 
-#search-btn:focus {
+#search-button:focus {
   outline: none;
 }
 
-#search-btn:after {
+#search-button:after {
   content: '';
   border-radius: 50%!important;
   width: var(--button-size);
@@ -142,51 +153,75 @@ h1 {
   position: absolute;
   top: 50%;
   left: 50%;
-  margin-top: -110px;
-  margin-left: -110px;
-  background-color: #D35400
+  margin-top: -70px;
+  margin-left: -70px;
+  background-color: var(--action)
 }
-
-#station-search-container-by-city * {
-  line-height: 2rem;
-  font-size: 2vh;
+#station-search-container-by-city{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
 }
-
-#search-by-city-button, #big-button-description {
-  color: #D35400;
-  font-weight: 700;
-  letter-spacing: 1px;
-  text-decoration: none;
-}
-
-#big-button-description {
-  text-align:center;
-}
-
 #station-search-container-by-city-input {
-  width: 200px;
+  border-radius: 5px;
+  border: 1px solid var(--primary);
+  padding: 5px;
+  font-size: 1.5rem;
+  line-height: 3rem;
+  width: 25%;
+  min-width: 250px;
+  height: 3rem;
+  margin-right: 2rem;
+  background-color: transparent;
+  outline: none;
+  -moz-box-shadow: inset 0px 0px 5px 1px var(--primaryOpacity);
+  -webkit-box-shadow: inset 0px 0px 5px 1px var(--primaryOpacity);
+  -o-box-shadow: inset 0px 0px 5px 1px var(--primaryOpacity);
+  box-shadow: inset 0px 0px 5px 1px var(--primaryOpacity);
+  filter:progid:DXImageTransform.Microsoft.Shadow(color=var(--primaryOpacity), Direction=NaN, Strength=50);
+}
+#station-search-container-by-city-input::placeholder{
+  font-size: 1.5rem;
+  line-height: 3rem;
+  color: var(--primaryOpacity);
+  margin: 0 0 0 1rem;
 }
 .station-search-container-by-city-label {
-  color: #34495E;
+  color: var(--primary);
 }
-#train.loader {
-  background-image: url('./img/tchou.svg');
+#train-station.loader {
+  background-image: url('./img/yourPosition.png');
+  background-size:100%;
+  background-position: center center;
+  background-repeat: no-repeat;
   width: 50px;
-  height: 50px;
+  height: 75px;
   position: absolute;
   top: 50%;
   left: 50%;
-  margin-top: -55px;
+  margin-top: -37px;
   margin-left: -25px;
-  animation: myOrbit 4s linear infinite;
+  animation: flash 1s linear infinite;
+  z-index: 999;
 }
-@keyframes myOrbit {
-  from {
-    transform: rotate(0deg) translateY(-110px) rotate(0deg);
+@keyframes flash {
+  0% {
+    transform: scale(1);
   }
-
-  to {
-    transform: rotate(-360deg) translateY(-110px) rotate(0deg);
+  25% {
+    transform: scale(1.1);
+  }
+  40% {
+    transform: scale(1);
+  }
+  60% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
   }
 }
 #mapcontainer.map-container-element+#search-btn-container.active-button {
@@ -219,11 +254,12 @@ h1 {
   flex: 1;
 }
 footer {
-  color: #34495E;
+  color: var(--primary);
   justify-content: center;
   align-items: center;
   font-size: 2vh;
   text-align: center;
+  margin: 4vh auto;
 }
 footer a {
   color: #D35400;
@@ -233,16 +269,12 @@ footer a {
 /*Mobile*/
 
 /*landscape mode */
-@media(max-width: 800px) {
+@media(max-width: 800px) and (orientation: landscape) {
   header {
     visibility: hidden;
   }
 
   footer {
-    visibility: hidden;
-  }
-
-  #big-button-description {
     visibility: hidden;
   }
 
@@ -260,11 +292,10 @@ footer a {
   footer {
     visibility: visible;
   }
-
-  #big-button-description {
-    visibility: visible;
+  #station-search-container-by-city-input{
+    min-width: 300px;
+    margin: 0 2rem;
   }
-
   .leaflet-container {
     overflow: hidden !important;
   }
@@ -281,7 +312,6 @@ footer a {
     line-height: 7.5vw;
     padding-top: 1rem;
   }
-
   #stations {
     display: none;
   }

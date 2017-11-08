@@ -24,24 +24,20 @@
       <div id="mapid"></div>
     </div>
 
-
     <div id="trainLoader-buttonSearch-container">
-      <p id="big-button-description">Cliquez sur ce gros bouton pour vous géolocaliser :</p>
-      <div id="search-btn-container" onclick="searchByGeolocation()" style="border-radius:50%">
-        <button id="search-btn"><img src="./img/search.svg"  alt=""></button>
+      <div id="station-search-container-by-city">
+        <div id="error-city"></div>
+        <input id="station-search-container-by-city-input" list="filtered-cities" placeholder="" />
+        <datalist id="filtered-cities"></datalist>
+        <div id="search-btn-container" class="search-btn-container" onclick="searchByCity()">
+          <button id="search-button" ><img src="./img/search.svg"  alt=""></button>
+        </div>
       </div>
-            <span id="train"></span>
+      <span id="train-station"></span>
     </div>
   </section>
 
   <footer>
-    <div id="station-search-container-by-city">
-      <div id="error-city"></div>
-      <span class="station-search-container-by-city-label">ou</span>
-      <input id="station-search-container-by-city-input" list="filtered-cities" placeholder="entrez votre ville" />
-      <datalist id="filtered-cities"></datalist>
-      <button id="search-by-city-button" onclick="searchByCity()">Chercher cette ville</button>
-    </div>
     <br><br>
     <span>
       Ce site n'est ni affilié à la SNCF ni à trainline |
@@ -56,14 +52,15 @@
 <script>
   var map;
   var lastProposedCities = [];
-  initSearchByCityInput();
 
+  initSearchByCityInput();
 
   function initSearchByCityInput() {
 
     const input = document.getElementById("station-search-container-by-city-input");
-    input.addEventListener("input", function(e) {
 
+      input.placeholder = "Ma position actuelle";
+      input.addEventListener("input", function(e) {
       function onAPIResultComplete(proposals) {
         const cities = document.getElementById('filtered-cities');
         cities.innerHTML = "";
@@ -84,24 +81,9 @@
 
   function hideSearchFields() {
     document.getElementById("search-btn-container").className += 'active-button';
-    document.getElementById("train").className += 'loader';
+    document.getElementById("train-station").className += 'loader';
     document.getElementById("stations").className += "station-element";
     document.getElementById("station-search-container-by-city").className += 'active-button';
-  }
-
-
-  function searchByCity() {
-
-    const cityInput = document.getElementById("station-search-container-by-city-input").value;
-    const selectedCity = lastProposedCities.filter(u => u.label == cityInput.trim())[0];
-
-    if (selectedCity == null) {
-      var warning = document.getElementById("error-city");
-      warning.innerText = 'Nous n\'avons pas pu localiser la ville saisie, veuillez recommencer.';
-    } else {
-      hideSearchFields();
-      search(selectedCity.lat, selectedCity.lon, selectedCity.label);
-    }
   }
 
 
@@ -122,6 +104,18 @@
     navigator.geolocation.getCurrentPosition(geoSuccess);
   }
 
+  function searchByCity() {
+
+      const cityInput = document.getElementById("station-search-container-by-city-input").value;
+      const selectedCity = lastProposedCities.filter(u => u.label == cityInput.trim())[0];
+
+      if (selectedCity == null) {
+          searchByGeolocation();
+      } else {
+          hideSearchFields();
+          search(selectedCity.lat, selectedCity.lon, selectedCity.label);
+      }
+  }
 
   function search(userLat, userLong, positionLabel = 'Votre position') {
 
