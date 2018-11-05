@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "test": "ava"
+    "test": "ava --verbose"
   },
   "devDependencies": {
     "ava": "^0.22.0"
