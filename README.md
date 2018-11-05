@@ -4,6 +4,8 @@ Find the nearest train station from the french train network (SNCF).
 
 Available on: http://www.garelaplusproche.fr
 
+Thanks to [laurencebeillaux](https://github.com/laurencebeillaux) who created all the website UI/UX.
+
 ## Data sources
 
 There are two inputs: 
