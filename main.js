@@ -38,8 +38,6 @@ function stationName(e){
   return Object.keys(e)[0];
 }
 
-
-//Object.values is ES2017
 function latitude(e){
   return Object.keys(e).map(k => e[k])[0][0];
 }
@@ -86,9 +84,7 @@ function proposalsFrom(jsonAddresses){
 }
 
 
-//------------------------------------------------------------------------------
-//for unit tests
-if (typeof module !== 'undefined'){
+if (typeof module !== 'undefined'){ //for unit tests
   module.exports.stations = stations;
   module.exports.findNearestStations = findNearestStations;
   module.exports.proposalsFrom = proposalsFrom;
