@@ -17,12 +17,10 @@ Two outputs:
 - to buy tickets : http://trainline.fr 
 
 
-## Motivations (in english)
+## Motivations
 
 I was in vacation in the french coutryside on 10/09/2017. I had to drive a friend to the nearest train station, I fought on the web several minutes to get the right information. 
 
-I wish it could have been easier. 
+I wish it could have been easier. That's why I created this simple website.
 
-That's why I created this simple website.
-
-
+If you can read french you can get a longer explanation [here](motivations-fr.md).
