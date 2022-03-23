@@ -6,7 +6,7 @@ Available on: http://www.garelaplusproche.fr
 
 Thanks to [laurencebeillaux](https://github.com/laurencebeillaux) who created all the website UI/UX.
 
-# Run 
+## Run 
 
 ```
 npm install 
@@ -14,7 +14,7 @@ npm start
 ```
 Note : tested with Node 16.x. 
 
-# Tests 
+## Tests 
 
 ```
 npm test
