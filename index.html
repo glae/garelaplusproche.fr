@@ -27,11 +27,12 @@
     <div id="trainLoader-buttonSearch-container">
       <div id="station-search-container-by-city">
         <div id="error-city"></div>
-        <input id="station-search-container-by-city-input" list="filtered-cities" placeholder="" />
-        <datalist id="filtered-cities"></datalist>
+        <p class="detail">Activez votre géolocalisation et cliquez sur le bouton, <b>ou</b> saisissez votre ville :</p>
         <div id="search-btn-container" class="search-btn-container" onclick="searchByCity()">
           <button id="search-button" ><img src="./img/search.svg"  alt=""></button>
         </div>
+        <input id="station-search-container-by-city-input" list="filtered-cities" placeholder="" />
+        <datalist id="filtered-cities"></datalist>
       </div>
       <span id="train-station"></span>
     </div>

@@ -40,6 +40,10 @@ h1 {
   letter-spacing: 2px;
 }
 
+.detail {
+  color: var(--primary) !important;
+  font-weight: normal !important;
+}
 
 /*List gare*/
 
@@ -100,6 +104,7 @@ h1 {
 #error-city {
   font-weight: bold;
   color: red;
+  margin-left: 2rem;
 }
 
 /*search-button*/
@@ -162,7 +167,7 @@ h1 {
 }
 #station-search-container-by-city{
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
@@ -177,7 +182,7 @@ h1 {
   width: 25%;
   min-width: 250px;
   height: 3rem;
-  margin-right: 2rem;
+  margin-top: 1rem;
   background-color: transparent;
   outline: none;
   -moz-box-shadow: inset 0px 0px 5px 1px var(--primaryOpacity);
@@ -297,7 +302,8 @@ footer a {
   }
   #station-search-container-by-city-input{
     min-width: 300px;
-    margin: 0 2rem;
+    margin-left: 2rem;
+    margin-top: 1rem;
   }
   .leaflet-container {
     overflow: hidden !important;
