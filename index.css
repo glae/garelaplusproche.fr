@@ -18,27 +18,26 @@ body {
 }
 
 header {
-  height: 20vh;
   width: 100vw;
 }
 
 h1 {
   color: var(--primary);
   font-family: "Verdana", sans-serif;
-  /*line-height: 4rem;*/
-  font-size: 5vh;
   font-weight: 500;
   letter-spacing: 2px;
   text-align: center;
   margin: 0 auto;
-  padding: 3rem 0 0;
+  padding: 1rem 0 0;
   width: 100%;
   min-width: 300px;
 }
 
 .highlight {
+  font-family: "Verdana", sans-serif;
   color: #D35400;
   font-weight: 500;
+  letter-spacing: 2px;
 }
 
 
@@ -91,7 +90,11 @@ h1 {
 
 .station-element h2 {
   color: var(--primary);
-  margin: 2rem;
+  margin-left: 2rem;
+  margin-right: 2rem;
+  font-size: 1.2rem;
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
 #error-city {
@@ -257,9 +260,9 @@ footer {
   color: var(--primary);
   justify-content: center;
   align-items: center;
-  font-size: 2vh;
+  font-size: 0.8rem;
   text-align: center;
-  margin: 4vh auto;
+  margin: 1vh auto;
 }
 footer a {
   color: #D35400;

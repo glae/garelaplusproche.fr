@@ -1,8 +1,26 @@
 {
-  "scripts": {
-    "test": "ava --verbose"
+  "name": "lagarelaplusproche.fr",
+  "version": "1.0.0",
+  "description": "Find the nearest train station from the french train network (SNCF).",
+  "directories": {
+    "test": "tests"
   },
   "devDependencies": {
-    "ava": "^0.22.0"
-  }
+    "ava": "^0.22.0",
+    "http-server": "^14.1.0"
+  },
+  "scripts": {
+    "test": "ava --verbose",
+    "start": "http-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/glae/lagarelaplusproche.fr.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/glae/lagarelaplusproche.fr/issues"
+  },
+  "homepage": "https://github.com/glae/lagarelaplusproche.fr#readme"
 }

@@ -6,6 +6,20 @@ Available on: http://www.garelaplusproche.fr
 
 Thanks to [laurencebeillaux](https://github.com/laurencebeillaux) who created all the website UI/UX.
 
+# Run 
+
+```
+npm install 
+npm start
+```
+Note : tested with Node 16.x. 
+
+# Tests 
+
+```
+npm test
+```
+
 ## Data sources
 
 There are two inputs: 
@@ -23,4 +37,4 @@ I was in vacation in the french coutryside on 10/09/2017. I had to drive a frien
 
 I wish it could have been easier. That's why I created this simple website.
 
-If you can read french you can get a longer explanation [here](motivations-fr.md).
+If you can read french you can get a longer explanation [here](README-motivations-fr.md).
