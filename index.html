@@ -6,16 +6,19 @@
   <title>Gare la plus proche</title>
   <meta name="keywords" content="gare, proche, train, proximité, plus" />
   <meta name="viewport" content="width=device-width, user-scalable=no">
-  <script src="main.js"></script>
   <link rel="icon" type="image/png" href="./img/tchou.png" />
   <link rel="stylesheet" type="text/css" href="index.css" />
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ==" crossorigin="" />
-  <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js" integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log==" crossorigin=""></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css"
+    integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ=="
+    crossorigin="" />
+  <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"
+    integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log=="
+    crossorigin=""></script>
 </head>
 
 <body>
   <header id="header">
-    <h1>Trouvez la <span class="highlight">gare</span><br/>la plus <span class="highlight">proche</span></h1>
+    <h1>Trouvez la <span class="highlight">gare</span><br />la plus <span class="highlight">proche</span></h1>
   </header>
   <section class="station-search-container">
     <br>
@@ -23,23 +26,21 @@
     <div id="mapcontainer">
       <div id="mapid"></div>
     </div>
-
     <div id="trainLoader-buttonSearch-container">
       <div id="station-search-container-by-city">
         <div id="error-city"></div>
         <p class="detail">Activez votre géolocalisation et cliquez sur le bouton : </p>
         <div id="search-btn-container" class="search-btn-container" onclick="searchByCity()">
-          <button id="search-button" ><img src="./img/search.svg"  alt=""></button>
+          <button id="search-button"><img src="./img/search.svg" alt=""></button>
         </div>
         <br>
-        <p class="detail"><b>ou</b> saisissez votre ville puis cliquer sur le bouton ci-dessus :</p>
+        <p class="detail"><b>ou</b> saisissez votre commune puis cliquer sur le bouton ci-dessus :</p>
         <input id="station-search-container-by-city-input" list="filtered-cities" placeholder="" />
         <datalist id="filtered-cities"></datalist>
       </div>
       <span id="train-station"></span>
     </div>
   </section>
-
   <footer>
     <br><br>
     <span>
@@ -49,129 +50,8 @@
       Sources sur github
     </a>
   </footer>
+  <script src="main.js"></script>
+  <script src="index.js"></script>
 </body>
-
-
-<script>
-  var map;
-  var lastProposedCities = [];
-
-  initSearchByCityInput();
-
-  function initSearchByCityInput() {
-
-    const input = document.getElementById("station-search-container-by-city-input");
-
-      input.placeholder = "Ma position actuelle";
-      input.addEventListener("input", function(e) {
-      function onAPIResultComplete(proposals) {
-        const cities = document.getElementById('filtered-cities');
-        cities.innerHTML = "";
-        lastProposedCities = proposals;
-        proposals.forEach(
-          function(city) {
-            var option = document.createElement('option');
-            option.value = city.label;
-            cities.appendChild(option);
-          });
-      }
-
-      document.getElementById("error-city").innerHTML = '';
-      createProposals(input.value, onAPIResultComplete);
-    });
-  }
-
-
-  function hideSearchFields() {
-    document.getElementById("search-btn-container").className += 'active-button';
-    document.getElementById("train-station").className += 'loader';
-    document.getElementById("stations").className += "station-element";
-    document.getElementById("station-search-container-by-city").className += 'active-button';
-  }
-
-
-  function searchByGeolocation() {
-
-    hideSearchFields();
-    var warning = document.createElement("p");
-    warning.innerText = 'Si rien ne se passe, c\'est peut-être que vous n\'avez pas accepté la géolocalisation.';
-    setTimeout(function() {
-      document.getElementById("trainLoader-buttonSearch-container").appendChild(warning);
-    }, 6000);
-
-    var geoSuccess = function(p) {
-      const userLat = p.coords.latitude;
-      const userLong = p.coords.longitude;
-      search(userLat, userLong);
-    };
-    navigator.geolocation.getCurrentPosition(geoSuccess);
-  }
-
-  function searchByCity() {
-
-      const cityInput = document.getElementById("station-search-container-by-city-input").value;
-      const selectedCity = lastProposedCities.filter(u => u.label == cityInput.trim())[0];
-
-      if (selectedCity == null) {
-          searchByGeolocation();
-      } else {
-          hideSearchFields();
-          search(selectedCity.lat, selectedCity.lon, selectedCity.label);
-      }
-  }
-
-  function search(userLat, userLong, positionLabel = 'Votre position') {
-
-    const mapContainerElement = document.getElementById('mapcontainer');
-    mapContainerElement.innerHTML = "<div id='mapid'></div>";
-    mapContainerElement.className += "map-container-element";
-
-    map = L.map('mapid').setView([userLat, userLong], 11);
-    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
-
-    const foundStations = findNearestStations(stations, userLat, userLong);
-
-    var trainIcon = new L.Icon({
-      iconUrl: './img/tchou.png',
-      iconSize: [40, 40]
-    });
-    var homeIcon = new L.Icon({
-      iconUrl: './img/yourPosition.png',
-      iconSize: [40, 51]
-    });
-
-    foundStations.forEach(function(e) {
-      L.marker([latitude(e), longitude(e)], {
-        icon: trainIcon
-      }).addTo(map).bindPopup("<p style='font-size:150%'>"+
-        "<a target='_blank' style='color: #D35400; text-decoration: none;' href='https://www.openstreetmap.org/?mlat="+latitude(e)+"&mlon="+longitude(e)+"'>"+stationName(e)+"</a>"+
-        "<br><a href='https://www.trainline.fr/search/" + encodeURI(stationName(e).replace(/'/g, "%27")) + "/' target='_blank' style='color: #D35400; font-weight: 700; text-decoration: none;'>Partir avec trainline</a>"+
-        "<br>" +
-        "</p>"
-        );
-    });
-
-    L.marker([userLat, userLong], {
-      icon: homeIcon
-    }).addTo(map).bindPopup('<p style="font-size:150%">' + positionLabel + '</p>');
-
-    var showedStations;
-    var others = ""
-    if (foundStations.length >= 24) {
-      showedStations = foundStations.slice(0, 23);
-      others = "<li><b>et d'autres encore...<b></li>"
-    } else {
-      showedStations = foundStations;
-    }
-
-    document.getElementById('stations').innerHTML = '' +
-      '<h2>Voici les gares trouvées :</h2><ul>' +
-      showedStations.map(gare => '<li>' + stationName(gare) + '</li>').join('') +
-      others + '</ul>';
-
-    var mobileHeaderTitle = document.getElementById("header");
-    mobileHeaderTitle.className += "mobile";
-  }
-</script>
 
 </html>

@@ -1,6 +1,6 @@
 {
   "name": "lagarelaplusproche.fr",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Find the nearest train station from the french train network (SNCF).",
   "directories": {
     "test": "tests"
