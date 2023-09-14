@@ -1,6 +1,12 @@
 var map;
 var lastProposedCities = [];
+checkUrlParams();
 initSearchByCityInput();
+
+function copyLink() {
+    navigator.clipboard.writeText(window.location.href);
+    document.getElementById('copied').innerText = "Lien copié dans le presse-papier !";
+}
 
 function initSearchByCityInput() {
     const input = document.getElementById("station-search-container-by-city-input");
@@ -20,6 +26,15 @@ function initSearchByCityInput() {
         document.getElementById("error-city").innerHTML = '';
         createProposals(input.value, onAPIResultComplete);
     });
+}
+
+function checkUrlParams() {
+    var params = new URLSearchParams(window.location.search);
+    if (params.has('lat') && params.has('long')) {
+        const lat = parseFloat(params.get('lat'));
+        const long = parseFloat(params.get('long'));
+        searchByCoords(lat, long);
+    }
 }
 
 function hideSearchFields() {
@@ -55,7 +70,15 @@ function searchByCity() {
     }
 }
 
+function searchByCoords(userLat, userLong) {
+    hideSearchFields();
+    search(userLat, userLong);
+}
+
 function search(userLat, userLong, positionLabel = 'Votre position') {
+    if (window.location.search === '') {
+        history.replaceState(null, '', `/?lat=${userLat}&long=${userLong}`);
+    }
     var mapContainerElement = document.getElementById('mapcontainer');
     mapContainerElement.innerHTML = "<div id='mapid'></div>";
     mapContainerElement.className += "map-container-element";
@@ -91,10 +114,12 @@ function search(userLat, userLong, positionLabel = 'Votre position') {
     } else {
         showedStations = foundStations;
     }
-    document.getElementById('stations').innerHTML = '' +
+    stationsHtml = document.getElementById('stations');
+    stationsHtml.innerHTML = '' +
         '<h2>Voici les gares trouvées :</h2><ul>' +
         showedStations.map(gare => '<li>' + stationName(gare) + '</li>').join('') +
         others + '</ul>';
+    document.getElementById("share-link").style.visibility = 'visible';
     var mobileHeaderTitle = document.getElementById("header");
     mobileHeaderTitle.className += "mobile";
 }

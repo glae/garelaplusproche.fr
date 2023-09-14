@@ -18,11 +18,12 @@
 
 <body>
   <header id="header">
-    <h1>Trouvez la <span class="highlight">gare</span><br />la plus <span class="highlight">proche</span></h1>
+    <a href="/"><h1>Trouvez la <span class="highlight">gare</span><br />la plus <span class="highlight">proche</span></h1></a>
   </header>
   <section class="station-search-container">
     <br>
     <div id="stations"></div>
+    <div id="share-link" style="visibility: hidden;"><button onclick="copyLink()">📋🔗 Copier/partager ce résultat</button><div id="copied"></div></div>
     <div id="mapcontainer">
       <div id="mapid"></div>
     </div>
