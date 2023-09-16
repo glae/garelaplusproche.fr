@@ -203,6 +203,7 @@ h1 {
   justify-content: center;
   flex-wrap: wrap;
   width: 100%;
+  margin:1em;
 }
 
 #station-search-container-by-city-input {
@@ -324,10 +325,11 @@ footer a {
 @media(max-width: 800px) and (orientation: landscape) {
   header {
     visibility: hidden;
+    height: 0px !important;
   }
 
   footer {
-    visibility: hidden;
+    visibility: collapse;
   }
 
   .leaflet-container {
@@ -347,7 +349,6 @@ footer a {
 
   #station-search-container-by-city-input {
     min-width: 300px;
-    margin-left: 2rem;
     margin-top: 1rem;
   }
 

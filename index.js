@@ -10,7 +10,7 @@ function copyLink() {
 
 function initSearchByCityInput() {
     const input = document.getElementById("station-search-container-by-city-input");
-    input.placeholder = "Lieu";
+    input.placeholder = "Commune de France";
     input.addEventListener("input", function (e) {
         function onAPIResultComplete(proposals) {
             const cities = document.getElementById('filtered-cities');
