@@ -110,7 +110,7 @@ h1 {
   min-height: 200px;
   display: flex;
   position: absolute;
-  top: 50%;
+  top: 30%;
   left: 0;
   margin-top: calc(-1 * (200px / 2));
 }
