@@ -27,7 +27,7 @@ There are two inputs:
 - addresses: https://adresse.data.gouv.fr/api
 
 Two outputs: 
-- map : http://leafletjs.com/ (and [OSM](openstreetmap.org))
+- map : http://leafletjs.com/ (and [OSM](http://openstreetmap.org))
 - to buy tickets : http://trainline.fr 
 
 
