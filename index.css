@@ -71,6 +71,17 @@ h1 {
   font-weight: normal !important;
 }
 
+@media (max-width: 800px) {
+    .desktop { display: none; }
+    .mobile { display: block; }
+}
+
+@media (min-width: 800px) {
+  .desktop { display: block; }
+  .mobile { display: none; }
+}
+
+
 /*List gare*/
 
 .station-search-container {
