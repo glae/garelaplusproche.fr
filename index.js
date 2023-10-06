@@ -10,7 +10,6 @@ function copyLink() {
 
 function initSearchByCityInput() {
     const input = document.getElementById("station-search-container-by-city-input");
-    input.placeholder = "Commune de France";
     input.addEventListener("input", function (e) {
         function onAPIResultComplete(proposals) {
             const cities = document.getElementById('filtered-cities');
@@ -60,11 +59,12 @@ function searchByGeolocation() {
 }
 
 function searchByCity() {
+    console.log("searchByCity")
     const cityInput = document.getElementById("station-search-container-by-city-input").value;
+    console.log(cityInput);
     const selectedCity = lastProposedCities.filter(u => u.label == cityInput.trim())[0];
-    if (selectedCity == null) {
-        searchByGeolocation();
-    } else {
+    console.log(selectedCity);
+    if (selectedCity) {
         hideSearchFields();
         search(selectedCity.lat, selectedCity.lon, selectedCity.label);
     }

@@ -31,12 +31,12 @@
       <div id="station-search-container-by-city">
         <div id="error-city"></div>
         <p class="detail">Activez votre géolocalisation et cliquez sur le bouton : </p>
-        <div id="search-btn-container" class="search-btn-container" onclick="searchByCity()">
+        <div id="search-btn-container" class="search-btn-container" onclick="searchByGeolocation()">
           <button id="search-button"><img src="./img/search.svg" alt=""></button>
         </div>
         <br>
-        <p class="detail"><b>ou</b> saisissez votre commune puis cliquer sur le bouton ci-dessus :</p>
-        <input id="station-search-container-by-city-input" list="filtered-cities" placeholder="" />
+        <p class="detail"><b>ou</b> saisissez et sélectionnez votre commune :</p>
+        <input id="station-search-container-by-city-input" list="filtered-cities" placeholder="Commune de France" oninput="searchByCity()" />
         <datalist id="filtered-cities"></datalist>
       </div>
       <span id="train-station"></span>
