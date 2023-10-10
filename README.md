@@ -1,6 +1,6 @@
 # Gare la plus proche
 
-Find the nearest train station from the french train network (SNCF).
+Find the nearest train station from the train network in France (SNCF).
 
 Available on: http://www.garelaplusproche.fr
 
