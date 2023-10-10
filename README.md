@@ -20,16 +20,21 @@ Note : tested with Node 16.x.
 npm test
 ```
 
+## Contributing 
+
+Feel free to create an [issue](https://github.com/glae/garelaplusproche.fr/issues) for bug or enhancement.
+
 ## Data sources
 
 There are two inputs: 
-- train stations: https://ressources.data.sncf.com/explore/dataset/referentiel-gares-voyageurs/ (minimized in [source](https://github.com/glae/lagarelaplusproche.fr/blob/c442d5b520141b34f14778d230ad2c2d90f8e702/main.js#L1) with some [jq commands](https://github.com/glae/lagarelaplusproche.fr/blob/master/some_useful_commands_to_minimize_stations_file.sh))
-- addresses: https://adresse.data.gouv.fr/api
+
+- train stations list: https://ressources.data.sncf.com/explore/dataset/referentiel-gares-voyageurs/ (minimized in [source code](https://github.com/glae/garelaplusproche.fr/blob/master/main.js#L1) with some [`jq` commands](https://github.com/glae/lagarelaplusproche.fr/blob/master/some_useful_commands_to_minimize_stations_file.sh))
+- addresses/cities search API: https://adresse.data.gouv.fr/api
 
 Two outputs: 
-- map : http://leafletjs.com/ (and [OSM](http://openstreetmap.org))
-- to buy tickets : http://trainline.fr 
 
+- map: http://leafletjs.com/ (and [OpenStreetMap](http://openstreetmap.org))
+- to buy tickets: http://trainline.fr ("URL-friendly" alternative to https://www.sncf-connect.com/) 
 
 ## Motivations
 
