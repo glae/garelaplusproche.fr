@@ -28,7 +28,7 @@ Feel free to create an [issue](https://github.com/glae/garelaplusproche.fr/issue
 
 There are two inputs: 
 
-- train stations list: https://ressources.data.sncf.com/explore/dataset/referentiel-gares-voyageurs/ (minimized in [source code](https://github.com/glae/garelaplusproche.fr/blob/master/main.js#L1) with some [`jq` commands](https://github.com/glae/lagarelaplusproche.fr/blob/master/some_useful_commands_to_minimize_stations_file.sh))
+- train stations list: https://ressources.data.sncf.com/explore/dataset/referentiel-gares-voyageurs/ (minimized in [source code](stations-list.js#L1) with some [`jq` commands](tools/some_useful_commands_to_minimize_stations_file.sh))
 - addresses/cities search API: https://adresse.data.gouv.fr/api
 
 Two outputs: 
@@ -42,4 +42,4 @@ I was in vacation in the french coutryside on 10/09/2017. I had to drive a frien
 
 I wish it could have been easier. That's why I created this simple website.
 
-If you can read french you can get a longer explanation [here](README-motivations-fr.md).
+If you can read french you can get a longer explanation [here](doc/README-motivations-fr.md).
