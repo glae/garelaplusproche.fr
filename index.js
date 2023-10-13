@@ -84,7 +84,7 @@ function search(userLat, userLong, positionLabel = 'Votre position') {
     mapContainerElement.className += "map-container-element";
     map = L.map('mapid').setView([userLat, userLong], 11);
     L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
-    const foundStations = findNearestStations(stations, userLat, userLong);
+    const foundStations = findNearestStations(userLat, userLong);
     var trainIcon = new L.Icon({
         iconUrl: './img/tchou.png',
         iconSize: [40, 40]
