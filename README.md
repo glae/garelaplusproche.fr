@@ -28,7 +28,7 @@ Feel free to create an [issue](https://github.com/glae/garelaplusproche.fr/issue
 
 There are two inputs: 
 
-- train stations list: https://ressources.data.sncf.com/explore/dataset/referentiel-gares-voyageurs/ (minimized in [source code](stations-list.js#L1) with some [`jq` commands](tools/some_useful_commands_to_minimize_stations_file.sh))
+- train stations list: https://ressources.data.sncf.com/explore/dataset/referentiel-gares-voyageurs/ (minimized in [source code](stations-list.js#L1) with some [`jq` commands](tools/stations-sncf.md))
 - addresses/cities search API: https://adresse.data.gouv.fr/api
 
 Two outputs: 
